@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <title>To-Do App</title>
+</head>
+
+<body>
+    <div class=main-div>
+        <div class="blur">
+            <div class="header-container">
+                <div class="left-header">
+                    <h1 id="heading1">Tasks </h1>
+                    <h1 id="heading2">Lists </h1>
+                </div>
+
+                <div class="right-header">
+                    <div>
+                        <button class="add-list-button">
+                            <img src="./images/add-icon-40px.png" alt="add_icon" class="add_image">
+                            <h1 id="heading3">Add List</h1>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class=main-container>
+                <div id="empty-list-text-container">
+                    <h1 id="empty-list-text">No lists in the Task-List</h1>
+                </div>
+            </div>
+        </div>
+
+        <!--add list pop-up -->
+        <div class="new-list-modal-container">
+            <div class="add-new-list">
+                Add New List
+                <input type="text" id="add-list-textbox">
+                <input type="submit" value="ADD" id="add-list-add-button">
+                <input type="submit" value="BACK" id="add-list-back-button">
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Task Div -->
+
+    <div class="task-div">
+        <div class="blur">
+            <header class="header">
+                <div class="task-header-container">
+                    <div class="task-heading-left-box">
+                        <hr id="hr-left">
+                    </div>
+                    <div class="task-heading-middle-box">
+                        <h1 id="show-task-heading">Trip to Paris</h1>
+                    </div>
+                    <div class="task-heading-right-box">
+                        <hr id="hr-right">
+                    </div>
+                </div>
+
+                <div class="task-back-button">
+                    <button class="back-button">
+                        <img src="./images/back-arrow-40px.png" alt="arrow" style="padding:5px;"
+                            class="back-arrow-image">
+                        <h2 id="task-back-button-text">Back</h2>
+                    </button>
+                </div>
+            </header>
+
+            <div class="task-main-container">
+                <div class="task-main-box">
+                    <div class="task-main-box1">
+                        Trip to Paris
+                    </div>
+                    <hr class="task-hr">
+                    <ul class="subtask-list">
+
+                    </ul>
+                    <button class="add-subtask-button" onclick="newItemToggle(this)">
+                        <img src="./images/add-icon-50px.png" alt="add_icon" class="task-add-image">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--add item pop-up -->
+    <div class="new-item-modal-container">
+        <div class="add-new-item">
+            Add New Item
+            <input type="text" id="add-item-textbox">
+            <input type="submit" value="ADD" id="add-item-add-button" onclick="newItemToggle(this)">
+            <input type="submit" value="BACK" id="add-item-back-button" onclick="newItemToggle(this)">
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+
+
+</body>
+</html>
