@@ -107,16 +107,22 @@
     border-radius: 10px;
     box-shadow:5px 5px 12px #b8bec3;
     position: relative;
-
 }
 
 
 .tab ul{
     list-style-type:none;
-    padding:10px 0px;
+    padding:5px 0px;
 }
 .tab li{
     padding:10px 5px 10px 5px;
+}
+
+.tab-desc{
+    overflow:auto;
+    height:240px;
+    padding-top:10px;
+    padding-bottom:5px;
 }
 
 .tab-desc li{
@@ -153,9 +159,6 @@
     padding:10px;
     display:none;
 }
-
-
-
 
 
 .blur.active{
@@ -421,6 +424,7 @@
     flex-direction: column;
     font-family: 'Roboto', sans-serif;
     margin-top: 5px;
+    position: relative;
 
 }
 
@@ -433,11 +437,9 @@
     border-radius: 15px;
     padding-top:20px;
     margin-top:25px;
-    position:relative;
 }
 
 .task-main-box1{
-    /* border:1px solid black; */
     text-align: center;
     padding:15px;
     font-size:28px;
@@ -445,11 +447,20 @@
     color:#e85141;
 }
 
+
+.task-hr{
+    width:80%;
+    margin-right:0px;  
+    background-color:rgb(34, 33, 33);
+}
+
 .task-main-box ul{
     list-style-type: none;
     font-size:22px;
-    margin-top:15px;
+    margin-top:0px;
     padding:0px;
+    height:250px;
+    overflow: auto;
 }
 
 .task-main-box li{
@@ -463,21 +474,18 @@
     width:40px;
 }
 
+
 .add-subtask-button{
     border:none;
     background-color:white;
     padding:5px;
     position:absolute;
-    right:5px;
-    bottom:5px;
+    bottom:10px;
+    right:10px;
     cursor:pointer;
+    float: inline-end;
 }
 
-.task-hr{
-    width:80%;
-    margin-right:0px;  
-    background-color:rgb(34, 33, 33);
-}
 
 
 
@@ -546,6 +554,10 @@
         width:80%;
         margin-right: 0px;  
         background-color:darkgray;
+    }
+
+    .tab-desc{
+        height:180px;
     }
  
 }
