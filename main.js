@@ -4,10 +4,12 @@
 let addListButton = document.querySelector(".add-list-button");
 let addListBackButton = document.querySelector("#add-list-back-button");
 let addListAddButton = document.querySelector("#add-list-add-button");
+let mainContainer = document.querySelector(".main-container");
 
 let taskArray = [];
 let addListTextBox = document.querySelector("#add-list-textbox")
 addListAddButton.addEventListener("click", addList);
+
 
 
 // add list function
@@ -23,14 +25,34 @@ function addList(e) {
 
 
     // conditon check for displaying empty text message
-    if(taskArray.length>0){
-        let emptyListTextContainer=document.getElementById("empty-list-text-container");
-        emptyListTextContainer.style.display="none";
+    function displayEmptyTextFunction() {
+        if (taskArray.length > 0) {
+            let emptyListTextContainer = document.getElementById("empty-list-text-container");
+            emptyListTextContainer.style.display = "none";
+        }
     }
 
+    displayEmptyTextFunction();
+    createListFunction(taskObject.id, taskObject.title)
 
-    //dynamically creating HTML Elements
+}
 
+
+
+// displayEmptyTextFunction
+
+function displayEmptyTextFunction() {
+    if (taskArray.length > 0) {
+        let emptyListTextContainer = document.getElementById("empty-list-text-container");
+        emptyListTextContainer.style.display = "none";
+    }
+}
+
+
+
+//createListFunction() dynamically creating HTML Elements
+
+function createListFunction(taskObjectId, taskObjectTitle) {
     // creating div
     let div = document.createElement("div");
     div.classList.add("tab");
@@ -39,34 +61,84 @@ function addList(e) {
     // Tab heading
     let tabHeading = document.createElement("li");
     tabHeading.classList.add("tab-heading");
-    tabHeading.id = taskObject.id;
-    let tabHeadingText = document.createTextNode(taskObject.title);
+    tabHeading.id = taskObjectId;
+    let tabHeadingText = document.createTextNode(taskObjectTitle);
     tabHeading.appendChild(tabHeadingText);
     // hr
     let hr = document.createElement("hr");
-    hr.className="tab-hr";
+    hr.className = "tab-hr";
 
-    let deleteTask = document.createElement("li");
-    deleteTask.className = "delete-list-button";
-    let deleteTaskImage = document.createElement("img");
-    deleteTaskImage.src = "./images/icons8-delete-45.png";
-    deleteTask.appendChild(deleteTaskImage);
+    let deleteList = document.createElement("li");
+    deleteList.className = "delete-list-button";
+    deleteList.id = taskObjectId;
+    let deleteListImage = document.createElement("img");
+    deleteListImage.src = "./images/icons8-delete-45.png";
+    deleteList.appendChild(deleteListImage);
 
     let tabDesc = document.createElement("ul");
     tabDesc.className = "tab-desc";
-    tabDesc.id = taskObject.id;
+    tabDesc.id = taskObjectId;
 
 
     ul.appendChild(tabHeading);
     ul.appendChild(hr);
     ul.appendChild(tabDesc);
-    ul.appendChild(deleteTask);
+    ul.appendChild(deleteList);
     div.appendChild(ul);
     let mainContainer = document.querySelector(".main-container");
     mainContainer.appendChild(div);
-
-
 }
+
+
+
+// delete List
+mainContainer.addEventListener("click", deleteListFunction);
+
+function deleteListFunction(e) {
+    if (e.target.parentElement.classList.contains("delete-list-button")) {
+        // Deletes clicked list
+        let deleteListId = e.target.parentElement.id;
+        taskArray.forEach((item, index) => {
+            if (item.id == deleteListId) {
+                taskArray.splice(index, 1)
+            }
+        });
+
+
+        // Removes all the lists and adds them again
+        mainContainer.innerHTML = `<div id="empty-list-text-container">
+                                    <h1 id="empty-list-text">No lists in the Task-List</h1>
+                                 </div>`;
+        displayEmptyTextFunction();
+        taskArray.forEach((item) => {
+            createListFunction(item.id, item.title);
+        });
+
+
+        // Displays sublist for every list
+        taskArray.forEach(function (item) {
+            let htmlCode = "";
+            for (let i = 0; i < item.subtask.length; i++) {
+                if (item.completedTask.indexOf(String(item.subtask[i].id)) == "-1") {
+                    htmlCode += `<li class="isComplete" id="${item.subtask[i].id}">${item.subtask[i].subTaskItem}</li>`;
+                }
+                else {
+                    htmlCode += `<li class="isComplete completed" id="${item.subtask[i].id}">${item.subtask[i].subTaskItem}</li>`;
+                }
+            }
+
+            let tabDesc = document.querySelectorAll(".tab-desc");
+            tabDesc.forEach((element) => {
+                if (element.id == item.id) {
+                    element.innerHTML = htmlCode;
+                }
+            });
+        });
+
+
+    }
+}
+
 
 // add new list pop-up starts
 
@@ -85,7 +157,6 @@ function newListToggle() {
 
 
 // task-show
-let mainContainer = document.querySelector(".main-container");
 mainContainer.addEventListener("click", taskShow);
 
 function taskShow(e) {
@@ -100,7 +171,7 @@ function taskShow(e) {
         let taskHeading = document.querySelector(".task-main-box1");
         let addSubTaskButton = document.querySelector(".add-subtask-button");
         let taskMainBox = document.querySelector(".task-main-box");
-        let subtaskList=document.querySelector(".subtask-list")
+        let subtaskList = document.querySelector(".subtask-list")
 
 
         taskArray.forEach(function (item) {
@@ -110,7 +181,7 @@ function taskShow(e) {
                 taskHeading.id = taskId;
                 addSubTaskButton.id = taskId;
                 taskMainBox.id = taskId;
-                subtaskList.id=taskId
+                subtaskList.id = taskId
                 displayItems(item);
 
             }
@@ -126,10 +197,10 @@ function taskShow(e) {
                 if (item.id == taskId) {
                     let htmlCode = "";
                     for (let i = 0; i < item.subtask.length; i++) {
-                        if(item.completedTask.indexOf(String(item.subtask[i].id))=="-1"){
+                        if (item.completedTask.indexOf(String(item.subtask[i].id)) == "-1") {
                             htmlCode += `<li class="isComplete" id="${item.subtask[i].id}">${item.subtask[i].subTaskItem}</li>`;
                         }
-                        else{
+                        else {
                             htmlCode += `<li class="isComplete completed" id="${item.subtask[i].id}">${item.subtask[i].subTaskItem}</li>`;
                         }
                     }
@@ -141,7 +212,7 @@ function taskShow(e) {
                         }
                     })
                 }
-            })
+            });
         });
 
     }
@@ -177,11 +248,11 @@ function displayItems(temp) {
         if (temp.completedTask.indexOf(String(temp.subtask[i].id)) == "-1") {
             htmlCode += `<li class="isComplete" id=${temp.subtask[i].id}>${temp.subtask[i].subTaskItem}</li>`;
         }
-        else{
+        else {
             htmlCode += `<li class="isComplete completed" id=${temp.subtask[i].id}>${temp.subtask[i].subTaskItem}</li>`;
         }
     }
-    let ul = document.querySelector(".subtask-list").innerHTML=htmlCode;
+    let ul = document.querySelector(".subtask-list").innerHTML = htmlCode;
 }
 
 
@@ -192,25 +263,22 @@ function strikeThroughFunction(e) {
         let tabDescId = e.target.parentElement.id;
         taskArray.forEach((item) => {
             if (item.id == tabDescId) {
-                if(item.completedTask.indexOf(String(selectedItemId))=="-1")
-                {                  
+                if (item.completedTask.indexOf(String(selectedItemId)) == "-1") {
                     item.completedTask.push(selectedItemId);
                 }
             }
         });
 
         e.target.classList.toggle("completed");
-        if(e.target.classList.contains("completed"))
-        {
+        if (e.target.classList.contains("completed")) {
         }
-        else{
-            taskArray.forEach((item)=>{
-                if (item.id == tabDescId)
-                {
-                    let index=item.completedTask.indexOf(String(selectedItemId));
+        else {
+            taskArray.forEach((item) => {
+                if (item.id == tabDescId) {
+                    let index = item.completedTask.indexOf(String(selectedItemId));
                     console.log(index);
-                    item.completedTask.splice(index,1);
-                }              
+                    item.completedTask.splice(index, 1);
+                }
             });
         }
     }
@@ -219,33 +287,30 @@ function strikeThroughFunction(e) {
 
 
 
-// test
-let taskMainContainer=document.querySelector(".task-main-container");
+// Strike-through
+let taskMainContainer = document.querySelector(".task-main-container");
 taskMainContainer.addEventListener('click', strikeThroughFunction);
 function strikeThroughFunction(e) {
     if (e.target.classList.contains("isComplete")) {
         let selectedItemId = e.target.id;
-        let subtaskList= e.target.parentElement.id;
+        let subtaskList = e.target.parentElement.id;
         taskArray.forEach((item) => {
             if (item.id == subtaskList) {
-                if(item.completedTask.indexOf(String(selectedItemId))=="-1")
-                {                  
+                if (item.completedTask.indexOf(String(selectedItemId)) == "-1") {
                     item.completedTask.push(selectedItemId);
                 }
             }
         });
 
         e.target.classList.toggle("completed");
-        if(e.target.classList.contains("completed"))
-        {
+        if (e.target.classList.contains("completed")) {
         }
-        else{
-            taskArray.forEach((item)=>{
-                if (item.id == subtaskList)
-                {
-                    let index=item.completedTask.indexOf(String(selectedItemId));
-                    item.completedTask.splice(index,1);
-                }              
+        else {
+            taskArray.forEach((item) => {
+                if (item.id == subtaskList) {
+                    let index = item.completedTask.indexOf(String(selectedItemId));
+                    item.completedTask.splice(index, 1);
+                }
             });
         }
     }
