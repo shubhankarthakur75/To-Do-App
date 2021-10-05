@@ -159,6 +159,11 @@
     padding:10px;
 }
 
+.delete-list-button img{
+    height:50px;
+    width:50px;
+}
+
 
 .blur.active{
     filter:blur(9px);
@@ -669,6 +674,11 @@
 
     .tab-hr{
         display:none;
+    }
+
+    .delete-list-button img{
+        height:40px;
+        width:40px;
     }
 
 }
