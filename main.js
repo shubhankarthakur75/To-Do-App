@@ -34,6 +34,7 @@ function addList(e) {
 
     displayEmptyTextFunction();
     createListFunction(taskObject.id, taskObject.title)
+    addListTextBox.value="";
 
 }
 
@@ -234,9 +235,10 @@ function addItemFunction(e) {
                 subTaskObj.subTaskItem = addItemTextbox;
                 item.subtask.push(subTaskObj);
                 displayItems(item);
+                document.getElementById("add-item-textbox").value="";             
             }
 
-        })
+        });
     }
 }
 
